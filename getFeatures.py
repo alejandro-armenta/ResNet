@@ -37,7 +37,7 @@ image,label = test_dataset[0]
 other = image.numpy()
 other = other.transpose(1,2,0)
 
-print(label)
+#print(label)
 
 chech = torch.load('best_model.pt', map_location=device)
 
@@ -45,13 +45,15 @@ model = ResNet(ResidualBlock, [3,4,6,3])
 
 model.load_state_dict(chech['model_state_dict'])
 
+print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
+
 model_empty = ResNet(ResidualBlock, [3,4,6,3])
 
 def create_features(model, image, out):
     
     train_mode, eval_mode = get_graph_node_names(model)
 
-    print(train_mode)
+    #print(train_mode)
 
     return_nodes = {
 
@@ -100,7 +102,7 @@ def create_features(model, image, out):
 
     pred = model(image)
 
-    print(torch.max(pred.data,1))
+    #print(torch.max(pred.data,1))
     #print(torch.max(pred.squeeze(dim=0).shape)
 
     a = output['fm6'].squeeze(dim=0)
